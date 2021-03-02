@@ -13,7 +13,6 @@ public class BinarySearch {
         int[] arr = {1, 2, 3, 4, 5, 6, 7, 8, 9, 9, 9};
         List<Integer> list = binarySearch2(arr, 9, 0, arr.length);
         list.forEach(System.out::print);
-
     }
 
 
