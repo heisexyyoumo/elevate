@@ -1,9 +1,6 @@
 package com.humorous.elevate.juc;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.CopyOnWriteArraySet;
@@ -30,11 +27,11 @@ import java.util.concurrent.CopyOnWriteArraySet;
 public class NoSafeCollection {
 
     public static void main(String[] args) {
-        /*List<String> list = new ArrayList<>();*/  //Vector线程安全，ArrayList效率高
+//        List<String> list = new ArrayList<>();  //Vector线程安全，ArrayList效率高
         /*List<String> list = Collections.synchronizedList(new ArrayList<>());*/  //Collection:接口，Collections:工具类
         List<String> list = new CopyOnWriteArrayList<>();  //写时复制技术
 
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 30; i++) {
             new Thread(() -> {
                 list.add(UUID.randomUUID().toString().substring(0, 8));  //substring的参数 [,)
                 System.out.println(list);
