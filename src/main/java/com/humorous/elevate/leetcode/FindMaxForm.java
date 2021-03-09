@@ -1,44 +1,72 @@
 package com.humorous.elevate.leetcode;
 
 
-import java.util.Arrays;
-
 /**
  * leetcode 474题
  */
 public class FindMaxForm {
 
     public static void main(String[] args) {
-//        String[] strs = {"10", "0001", "111001", "1", "0"};
-        String[] strs = {"10", "0", "1"};
-        System.out.print(new FindMaxForm().findMaxForm(strs, 1, 1));
+        String[] strs = {"10", "0001", "111001", "1", "0"};
+        System.out.println(new FindMaxForm().findMaxForm(strs, 5, 3));
     }
 
-    int[] memo;
 
+//    //dp[i][j][k]表示[0,i]范围内满足0的个数小于j,1的个数小于m
+//    public int findMaxForm(String[] strs, int m, int n) {
+//        int[][][] dp = new int[strs.length][m + 1][n + 1];
+//        int num0 = strs[0].length() - numOf1(strs[0]);
+//        int num1 = numOf1(strs[0]);
+//        for (int j = 0; j <= m; j++) {
+//            for (int k = 0; k <= n; k++) {
+//                dp[0][j][k] = ((j >= num0 && k >= num1) ? 1 : 0);
+//            }
+//        }
+//
+//        for (int i = 1; i < strs.length; i++) {
+//            for (int j = 0; j <= m; j++) {
+//                for (int k = 0; k <= n; k++) {
+//                    int res = dp[i - 1][j][k];
+//                    num0 = strs[i].length() - numOf1(strs[i]);
+//                    num1 = numOf1(strs[i]);
+//                    if (j >= num0 && k >= num1) {
+//                        res = Math.max(res, 1 + dp[i - 1][j - num0][k - num1]);
+//                    }
+//                    dp[i][j][k] = res;
+//                }
+//            }
+//        }
+//
+//        return dp[strs.length - 1][m][n];
+//
+//    }
+
+
+    // 空间复杂度优化
     public int findMaxForm(String[] strs, int m, int n) {
-        memo = new int[strs.length];
-        Arrays.fill(memo, -1);
-        return maxForm(strs, 0, m, n);
+        int[][] dp = new int[m + 1][n + 1];
+        int num0 = strs[0].length() - numOf1(strs[0]);
+        int num1 = numOf1(strs[0]);
+        for (int j = 0; j <= m; j++) {
+            for (int k = 0; k <= n; k++) {
+                dp[j][k] = ((j >= num0 && k >= num1) ? 1 : 0);
+            }
+        }
+
+        for (int i = 1; i < strs.length; i++) {
+            for (int j = m; j >= 0; j--) {
+                for (int k = n; k >= 0; k--) {
+                    if (j >= num0 && k >= num1) {
+                        num0 = strs[i].length() - numOf1(strs[i]);
+                        num1 = numOf1(strs[i]);
+                        dp[j][k] = Math.max(dp[j][k], 1 + dp[j - num0][k - num1]);
+                    }
+                }
+            }
+        }
+        return dp[m][n];
     }
 
-
-    //[index,n-1]中满足0的个数小于等于i，1的个数小于等于j的最大子集长度
-    private int maxForm(String[] strs, int index, int i, int j) {
-        if (i < 0 || j < 0 || index >= strs.length) {
-            return 0;
-        }
-        if (memo[index] != -1) {
-            return memo[index];
-        }
-        int numOf1 = numOf1(strs[index]);
-        int numOf0 = strs[index].length() - numOf1;
-        int res = 0;
-        res = Math.max(maxForm(strs, index + 1, i, j),
-                1 + maxForm(strs, index + 1, i - numOf0, j - numOf1));
-        memo[index] = res;
-        return res;
-    }
 
     /**
      * 字符串中1的个数
@@ -47,11 +75,11 @@ public class FindMaxForm {
      * @return
      */
     public int numOf1(String str) {
-        int n = Integer.parseInt(str);
         int num = 0;
-        while (n != 0) {
-            n = n & (n - 1);
-            num++;
+        for (int i = 0; i < str.length(); i++) {
+            if (str.charAt(i) == '1') {
+                num++;
+            }
         }
         return num;
     }
