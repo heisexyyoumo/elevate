@@ -2,6 +2,10 @@ package com.humorous.elevate.leetcode;
 
 import java.util.Arrays;
 
+/**
+ * 36. 有效的数独
+ */
+
 public class IsValidSudoku {
 
     public boolean isValidSudoku(char[][] board) {
