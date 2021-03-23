@@ -1,7 +1,10 @@
 package com.humorous.elevate.leetcode;
 
-public class SearchRange {
+/**
+ * 34. 在排序数组中查找元素的第一个和最后一个位置
+ */
 
+public class SearchRange {
 
     public static void main(String[] args) {
         int[] nums = {5, 7, 7, 8, 8, 10};
