@@ -1,4 +1,4 @@
-package com.humorous.elevate;
+package com.humorous.activemq.topic;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -8,10 +8,9 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication
 @EnableJms
 @EnableScheduling
-public class ElevateApplication {
+public class MainAppTopicProduce {
 
     public static void main(String[] args) {
-        SpringApplication.run(ElevateApplication.class, args);
+        SpringApplication.run(MainAppTopicProduce.class, args);
     }
-
 }

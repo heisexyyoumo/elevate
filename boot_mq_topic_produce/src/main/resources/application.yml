@@ -1,5 +1,5 @@
 server:
-  port: 7777
+  port: 6666
 
 spring:
   redis:
@@ -10,7 +10,7 @@ spring:
     user: admin
     password: admin
   jms:
-    pub-sub-domain: false  # fale = 队列，true = 主题
+    pub-sub-domain: true  # fale = 队列，true = 主题
 
 #自定义队列名称
-myqueue: boot-activemq-queue
+mytopic: boot-activemq-topic
