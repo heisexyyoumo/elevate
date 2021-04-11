@@ -7,6 +7,10 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
+
+/**
+ * 读写锁实现缓存
+ */
 class MyCache {
 
     private volatile Map<String, Object> map = new HashMap<>();

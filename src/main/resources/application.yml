@@ -1,5 +1,5 @@
 server:
-  port: 7777
+  port: 8976
 
 spring:
   redis:
@@ -13,4 +13,9 @@ spring:
     pub-sub-domain: false  # fale = 队列，true = 主题
 
 #自定义队列名称
-myqueue: boot-activemq-queue
+my-boot-queue: boot-activemq-queue
+
+humorous:
+  hello:
+    prefix: humorous
+    suffix: 666

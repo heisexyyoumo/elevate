@@ -1,5 +1,4 @@
-package com.humorous.elevate.designpattern;
-
+package com.humorous.elevate.designpattern.singleton.SS;
 
 /**
  * 单例模式

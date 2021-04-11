@@ -20,7 +20,7 @@ public class QueueProduce {
         jmsMessagingTemplate.convertAndSend(queue, "****:" + UUID.randomUUID().toString().substring(0, 6));
     }
 
-    @Scheduled(fixedDelay = 3000)
+//    @Scheduled(fixedDelay = 3000)
     public void produceMsgScheduled() {
         jmsMessagingTemplate.convertAndSend(queue, "****Scheduled:" +
                 UUID.randomUUID().toString().substring(0, 6));
