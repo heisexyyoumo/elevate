@@ -6,6 +6,10 @@ package com.humorous.elevate.leetcode;
  */
 public class HasCycle {
 
+    public static void main(String[] args) {
+
+    }
+
     public boolean hasCycle(ListNode head) {
         ListNode quickNode = head;
         ListNode slowNode = head;
