@@ -4,7 +4,9 @@ import java.util.Arrays;
 
 /**
  * 希尔排序是简单插入排序的优化版本，目的是减少交换次数
+ * 把数列进行分组(组内不停使用插入排序)，直至从宏观上看起来有序
  * 步长gap: gap /= 2
+ * 时间复杂度为 O(nlogn)， 空间复杂度为O(1)
  */
 public class ShellSort {
     public static void main(String[] args) {

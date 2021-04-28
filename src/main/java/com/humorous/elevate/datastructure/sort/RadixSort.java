@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 /**
  * 基数排序，也称桶排序
+ * O (nlog(r)m)，其中r为所采取的基数，而m为堆数
  */
 public class RadixSort {
 

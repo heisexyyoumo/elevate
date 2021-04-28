@@ -15,14 +15,8 @@ public class BuildTree {
         new BuildTree().buildTree(preOrder, inOrder);
     }
 
-//    Map<Integer, Integer> map;
 
     public TreeNode buildTree(int[] preorder, int[] inorder) {
-//        map = new HashMap<>(inorder.length);
-//        for (int i = 0; i < inorder.length; i++) {
-//            map.put(inorder[i], i);
-//        }
-
         TreeNode root = build(preorder, inorder);
         return root;
     }

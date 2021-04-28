@@ -3,7 +3,7 @@ package com.humorous.elevate.datastructure.sort;
 import java.util.Arrays;
 
 /**
- * 归并排序
+ * 归并排序 O(nlogn)
  */
 public class MergeSort {
     public static void main(String[] args) {
