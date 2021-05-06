@@ -14,6 +14,7 @@ public class CuttingRope {
     }
 
     // f(n)表示长度为n能取到的最大值，f(n)=Math.max(1*f(n-1),2*f(n-2),..(n-1)*f(1))
+    // 1.不剪 2.剪成两段 3.剪成多段
     public int cuttingRope(int n) {
         int[] memo = new int[n + 1];
         memo[0] = 0;

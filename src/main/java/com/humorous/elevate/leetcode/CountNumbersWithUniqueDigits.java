@@ -17,13 +17,6 @@ public class CountNumbersWithUniqueDigits {
     public int countNumbersWithUniqueDigits(int n) {
         int[] visited = new int[10];
         count(n, 1, visited);
-//        int result = 0;
-//        for (int i = 0; i <= n; i++) {
-//            count = 0;
-//            count(i, 1, visited);
-//            result += count;
-//
-//        }
         return count;
     }
 

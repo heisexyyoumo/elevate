@@ -11,43 +11,18 @@ public class MaxProduct {
     }
 
     public int maxProduct(int[] nums) {
-        int n = nums.length;
-
-        int l = 0;
-        int r = 0;
-        int product = nums[0];
-        int res = Integer.MIN_VALUE;
-        while (l < nums.length) {
-            if (r + 1 < nums.length && product < countProduct(l, r + 1, nums)) {
-                r++;
-                product = countProduct(l, r, nums);
-            } else {
-                l++;
-                if (l != nums.length) {
-                    product = nums[l];
-                    if (r + 1 != nums.length) {
-                        r = l;
-                    }
-                }
-            }
-            res = Math.max(res, product);
-        }
-
-        return res;
-
-    }
-
-    public int countProduct(int l, int r, int[] nums) {
-        int res = 1;
+        int max = Integer.MIN_VALUE, imax = 1, imin = 1;
         for (int i = 0; i < nums.length; i++) {
-            if (i > r) {
-                break;
+            if (nums[i] < 0) {
+                int tmp = imax;
+                imax = imin;
+                imin = tmp;
             }
-            if (i >= l) {
-                res *= nums[i];
-            }
+            imax = Math.max(imax * nums[i], nums[i]);
+            imin = Math.min(imin * nums[i], nums[i]);
 
+            max = Math.max(max, imax);
         }
-        return res;
+        return max;
     }
 }

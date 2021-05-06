@@ -8,7 +8,7 @@ import java.util.Queue;
  */
 public class ConnectRightNode {
 
-
+    // O(N)级别空间复杂度
     public Node connect(Node root) {
         if (root == null) {
             return root;
@@ -32,6 +32,20 @@ public class ConnectRightNode {
                     queue.add(node.right);
                 }
             }
+        }
+        return root;
+    }
+
+    // O(1)级别空间复杂度
+    public Node connect2(Node root) {
+        if (root == null) {
+            return root;
+        }
+        if (root.left != null) {
+            root.left.next = root.right;
+            root.right.next = root.next != null ? root.next.left : null;
+            connect2(root.left);
+            connect2(root.right);
         }
         return root;
     }
