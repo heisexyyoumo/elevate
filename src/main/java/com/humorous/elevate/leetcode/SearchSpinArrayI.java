@@ -11,36 +11,44 @@ public class SearchSpinArrayI {
         System.out.println(new SearchSpinArrayI().search(nums, 8));
     }
 
-    public int search(int[] nums, int target) {
-
-        int n = nums.length;
-        if (n == 0) {
-            return -1;
+    public boolean search(int[] nums, int target) {
+        if (nums == null || nums.length == 0) {
+            return false;
         }
-        if (n == 1) {
-            return nums[0] == target ? 0 : -1;
-        }
-        int l = 0, r = n - 1;
-        while (l <= r) {
-            int mid = (l + r) / 2;
+        int start = 0;
+        int end = nums.length - 1;
+        int mid;
+        while (start <= end) {
+            mid = start + (end - start) / 2;
             if (nums[mid] == target) {
-                return mid;
+                return true;
             }
-            if (nums[0] <= nums[mid]) {
-                if (nums[0] <= target && target < nums[mid]) {
-                    r = mid - 1;
-                } else {
-                    l = mid + 1;
+            if (nums[start] == nums[mid]) {
+                start++;
+                continue;
+            }
+            //前半部分有序
+            if (nums[start] < nums[mid]) {
+                //target在前半部分
+                if (nums[mid] > target && nums[start] <= target) {
+                    end = mid - 1;
+                } else {  //否则，去后半部分找
+                    start = mid + 1;
                 }
             } else {
-                if (nums[mid] < target && target <= nums[n - 1]) {
-                    l = mid + 1;
-                } else {
-                    r = mid - 1;
+                //后半部分有序
+                //target在后半部分
+                if (nums[mid] < target && nums[end] >= target) {
+                    start = mid + 1;
+                } else {  //否则，去后半部分找
+                    end = mid - 1;
+
                 }
             }
         }
-        return -1;
+        //一直没找到，返回false
+        return false;
+
     }
 
 }

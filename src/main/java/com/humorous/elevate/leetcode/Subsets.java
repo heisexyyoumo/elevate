@@ -35,10 +35,9 @@ public class Subsets {
         }
 
         for (int i = index; i < nums.length; i++) {
-            index = i;
             list.addLast(nums[i]);
             res.add(new ArrayList<>(list));
-            track(nums, index + 1, list);
+            track(nums, i + 1, list);
             list.removeLast();
         }
     }

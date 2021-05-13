@@ -44,34 +44,4 @@ public class NumDecodings {
         int num = Integer.parseInt(s);
         return num > 0 && num <= 26;
     }
-
-
-//    int count = 0;
-//    public int numDecodings(String s) {
-//        count(s, 0);
-//        return count;
-//    }
-//
-//    // 准备将考虑从第index个元素进行翻译
-//    private void count(String s, int index) {
-//        if (index >= s.length()) {
-//            count++;
-//            return;
-//        }
-//
-//        int num1 = Integer.parseInt(index + 1 < s.length() ? s.substring(index, index + 1) : s.substring(index));
-//        if (num1 > 0 && num1 <= 26) {
-//            count(s, index + 1);
-//        } else {
-//            return;
-//        }
-//
-//        if (index + 2 <= s.length()) {
-//            int num2 = Integer.parseInt(index + 2 == s.length() ? s.substring(index) : s.substring(index, index + 2));
-//            if (num2 > 0 && num2 <= 26) {
-//                count(s, index + 2);
-//            }
-//        }
-//
-//    }
 }

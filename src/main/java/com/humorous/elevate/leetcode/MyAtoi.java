@@ -5,7 +5,7 @@ import java.util.Queue;
 
 /**
  * 8. 字符串转换整数 (atoi)
- * 用栈来解决
+ * 用队列来解决
  */
 public class MyAtoi {
 

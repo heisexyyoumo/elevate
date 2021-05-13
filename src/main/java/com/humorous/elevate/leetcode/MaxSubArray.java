@@ -2,8 +2,6 @@ package com.humorous.elevate.leetcode;
 
 /**
  * 53. 最大子序和
- * <p>
- * 滑动窗口来解决
  */
 public class MaxSubArray {
 

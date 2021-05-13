@@ -11,16 +11,12 @@ public class TitleToNumber {
         System.out.println(new TitleToNumber().titleToNumber(columnTitle));
     }
 
-    public int titleToNumber(String columnTitle) {
-        char[] chars = columnTitle.toCharArray();
-        int n = chars.length;
-        if (n == 0) {
-            return 0;
+    public int titleToNumber(String s) {
+        int ans = 0;
+        for (int i = 0; i < s.length(); i++) {
+            int num = s.charAt(i) - 'A' + 1;
+            ans = ans * 26 + num;
         }
-        int res = 0;
-        for (int i = 0; i < n; i++) {
-            res += 26 * i * (chars[i] - 'A' + 1) + (chars[i] - 'A' + 1);
-        }
-        return res;
+        return ans;
     }
 }

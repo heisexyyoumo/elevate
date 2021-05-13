@@ -30,12 +30,11 @@ public class SubsetsWithDup {
         }
 
         for (int i = index; i < nums.length; i++) {
-            index = i;
             list.addLast(nums[i]);
             if (!res.contains(list)) {
                 res.add(new LinkedList<>(list));
             }
-            track(nums, index + 1, list);
+            track(nums, i + 1, list);
             list.removeLast();
         }
     }
