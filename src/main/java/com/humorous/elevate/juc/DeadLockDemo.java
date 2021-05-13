@@ -9,10 +9,10 @@ import java.util.concurrent.TimeUnit;
 public class DeadLockDemo {
 
     public static void main(String[] args) throws InterruptedException {
-//        new Thread(new MyDeadLock("resource1", "resource2")).start();
-//        new Thread(new MyDeadLock("resource2", "resource1")).start();
-        System.out.println("******GC调优的各个参数*******");
-        //Thread.sleep(Integer.MAX_VALUE);
+        new Thread(new MyDeadLock("resource1", "resource2")).start();
+        new Thread(new MyDeadLock("resource2", "resource1")).start();
+//        System.out.println("******GC调优的各个参数*******");
+//        Thread.sleep(Integer.MAX_VALUE);
     }
 }
 
