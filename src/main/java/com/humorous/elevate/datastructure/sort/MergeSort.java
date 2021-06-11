@@ -3,7 +3,8 @@ package com.humorous.elevate.datastructure.sort;
 import java.util.Arrays;
 
 /**
- * 归并排序 O(nlogn)
+ * 归并排序 O(nlogn)，最好	O(nlogn)，最坏O(nlogn)
+ * 稳定的排序算法。
  */
 public class MergeSort {
     public static void main(String[] args) {

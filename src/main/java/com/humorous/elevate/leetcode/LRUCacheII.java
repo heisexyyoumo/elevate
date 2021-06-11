@@ -15,7 +15,7 @@ public class LRUCacheII {
         }
 
         public Node(K key, V value) {
-            super();
+            this();
             this.key = key;
             this.value = value;
         }

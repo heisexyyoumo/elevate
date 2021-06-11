@@ -6,7 +6,7 @@ package com.humorous.elevate.datastructure.sort;
  * 排序的次数（大循环）为数组的长度-1
  * 每次排序比较的数都在减少
  * 当有一次排序没有任何交换，就退出排序过程，此时数据已经有序了--冒泡排序的优化
- * 时间复杂度：O(n^2)
+ * 时间复杂度：O(n^2)，最好O(n)，最坏O(n^2)
  */
 public class BubbleSort {
     public static void main(String[] args) {

@@ -4,7 +4,8 @@ import java.util.Arrays;
 
 /**
  * 快速排序是对冒泡排序的改进
- * 时间复杂度： O(nlogn)，最坏情况(O(n^2))
+ * 时间复杂度： O(nlogn)，最坏情况(O(n^2))，最好情况O(nlogn)
+ * 快速排序并不稳定，快速排序每次交换的元素都有可能不是相邻的, 因此它有可能打破原来值为相同的元素之间的顺序。
  */
 public class QuickSort {
     public static void main(String[] args) {

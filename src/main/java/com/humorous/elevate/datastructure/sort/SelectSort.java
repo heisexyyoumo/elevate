@@ -5,7 +5,8 @@ package com.humorous.elevate.datastructure.sort;
  * 每次从[i,arr.length - 1]中找到最小的值，然后和arr[i]进行交换
  * 排序的次数为arr.length-1
  * 每一次排序的第一个假定为最小的值
- * 时间复杂度：O(n^2)
+ * 时间复杂度：O(n^2)，最好O(n^2)，最坏O(n^2)
+ * 不稳定排序算法
  */
 public class SelectSort {
     public static void main(String[] args) {
