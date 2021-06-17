@@ -33,7 +33,10 @@ public class NoSafeCollection {
         for (int i = 0; i < 30; i++) {
             new Thread(() -> {
                 list.add(UUID.randomUUID().toString().substring(0, 8));  //substring的参数 [,)
-                System.out.println(list);
+//                System.out.println(list);
+                for (int j = 0; j < list.size(); j++) {
+                    System.out.println(list.get(j));
+                }
             }, String.valueOf(i)).start();
         }
     }
