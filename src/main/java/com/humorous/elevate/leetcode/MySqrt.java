@@ -2,11 +2,12 @@ package com.humorous.elevate.leetcode;
 
 /**
  * 69. x 的平方根
+ * 需要注意整型溢出问题
  */
 public class MySqrt {
 
     public static void main(String[] args) {
-        System.out.println(new MySqrt().mySqrt(8));
+        System.out.println(new MySqrt().mySqrt(1518991037));
 
     }
 
@@ -28,8 +29,6 @@ public class MySqrt {
                 r = m - 1;
             }
         }
-
-
         return -1;
     }
 

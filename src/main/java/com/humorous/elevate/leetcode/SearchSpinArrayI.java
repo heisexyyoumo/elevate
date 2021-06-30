@@ -51,4 +51,31 @@ public class SearchSpinArrayI {
 
     }
 
+
+    public int searchII(int[] nums, int target) {
+        // write code here
+        int l = 0;
+        int r = nums.length - 1;
+        while (l <= r) {
+            int m = (r - l) / 2 + l;
+            if (nums[m] == target) {
+                return m;
+            } else if (nums[m] > target) {
+                if (nums[m] <= nums[r]) {
+                    r = m - 1;
+                } else {
+                    l = m + 1;
+                }
+            } else {
+                if (nums[m] <= nums[r]) {
+                    l = m + 1;
+                } else {
+                    r = m - 1;
+                }
+            }
+        }
+
+        return -1;
+    }
+
 }
