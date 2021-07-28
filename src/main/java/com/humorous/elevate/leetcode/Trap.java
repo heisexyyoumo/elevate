@@ -10,53 +10,60 @@ public class Trap {
 
 
     public static void main(String[] args) {
-//        int[] height = {0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1};
-//        System.out.println(new Trap().trap(height));
-
-        System.out.println(new Trap().solve(-4, 3));
-        System.out.println(23 % 12);
+        int[] height = {0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1};
+        System.out.println(new Trap().trap(height));
     }
 
-    public String solve(int M, int N) {
-        // write code here
 
-        if (M < 0) {
-            N = -N;
-        }
-        StringBuilder sb = new StringBuilder();
-        while (M != 0) {
-            sb.append(handle(M % N));
-            M = M / N;
-        }
-        if (M < 0) {
-            sb.append("-");
-        }
-
-        return sb.reverse().toString();
-    }
-
-    public char handle(int num) {
-        if (num >= 0 && num < 10) {
-            return (char) ('0' + num);
-        } else {
-            return (char) ('A' + num - 10);
-        }
-    }
-
+    // 单调栈解法
+    // 单调递减栈维持接雨水的左边界，有比左边界的值大的时候表示可以接雨水
     public int trap(int[] height) {
-        int ans = 0;
         Deque<Integer> stack = new ArrayDeque<>();
-        for (int i = 0; i < height.length; i++) {
-            while (!stack.isEmpty() && height[i] > height[stack.peek()]) {
-                int top = stack.pop();
-                if (stack.isEmpty())
-                    break;
-                int distance = i - stack.peek() - 1;
-                int bounded_height = Math.min(height[i], height[stack.peek()]) - height[top];
-                ans += distance * bounded_height;
+        int index = 0;
+        int ans = 0;
+        while (index < height.length) {
+            while (!stack.isEmpty() && height[stack.peek()] < height[index]) {
+                int pop = stack.pop();
+                if (stack.isEmpty()) break;
+                int h = Math.min(height[index], height[stack.peek()]) - height[pop];
+                int w = index - stack.peek() - 1;
+                ans += h * w;
             }
-            stack.push(i);
+            stack.push(index++);
         }
         return ans;
+    }
+
+
+    // 动态规划
+    public int trap2(int[] height) {
+        int ans = 0;
+        int len = height.length;
+        if (len == 0) {
+            return ans;
+        }
+        int[] left = new int[len];
+        int[] right = new int[len];
+        left[0] = height[0];
+        for (int i = 1; i < len; i++) {
+            left[i] = Math.max(height[i], left[i - 1]);
+        }
+        right[len - 1] = height[len - 1];
+        for (int i = len - 2; i >= 0; i--) {
+            right[i] = Math.max(height[i], right[i + 1]);
+        }
+
+        for (int i = 0; i < len; i++) {
+            int min = Math.min(left[i], right[i]);
+            if (min > height[i]) {
+                ans += (min - height[i]);
+            }
+        }
+
+        return ans;
+    }
+
+    public int trap3(int[] height) {
+        return 0;
     }
 }
