@@ -9,6 +9,11 @@ public class Test {
 //        String a = "ahsdhahhhg";
 //        String s = a.substring(3, -1);
 //        System.out.println();
-        boolean leftOrder = true;
+        System.out.println(1);
+        byte b = 1;
+        int i=b;
+        long l=b;
+        float f=b;
+        double d=b;
     }
 }

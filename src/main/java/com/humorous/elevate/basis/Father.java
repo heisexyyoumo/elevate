@@ -2,20 +2,30 @@ package com.humorous.elevate.basis;
 
 public class Father {
 
-    public void say() {
+
+    private void say1() {
+        System.out.println("father say");
+    }
+
+    void say2() {
+        System.out.println("father say");
+    }
+
+    protected void say3() {
+    }
+
+    public void say4() {
         System.out.println("father say");
     }
 
     public static void main(String[] args) {
-        Father father = new Son();
-        father.say();
+//        Father father = new Son();
+//        father.say();
     }
 }
 
 
 class Son extends Father {
-    @Override
-    public void say() {
-        System.out.println("son say");
+    public static void main(String[] args) {
     }
 }

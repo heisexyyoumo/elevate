@@ -33,6 +33,5 @@ public class NextPermutation {
             }
         }
         Arrays.sort(nums);
-        return;
     }
 }
