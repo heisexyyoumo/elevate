@@ -1,6 +1,7 @@
 package com.humorous.elevate.leetcode;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -62,4 +63,41 @@ public class Permutation {
         }
 
     }
+
+    // 基于下一个排列来做
+    public String[] permutation2(String s) {
+        char[] array = s.toCharArray();
+        Arrays.sort(array);
+        List<String> list = new ArrayList<>();
+        do {
+            list.add(new String(array));
+        } while (nextPermute(array));
+
+        String[] res = new String[list.size()];
+        for (int i = 0; i < list.size(); i++) {
+            res[i] = list.get(i);
+        }
+
+        return res;
+    }
+
+    private boolean nextPermute(char[] array) {
+        int len = array.length;
+        for (int i = len - 1; i >= 0; i--) {
+            if (array[i] > array[i - 1]) {
+                Arrays.sort(array, i, len);
+                for (int j = i; j < len; j++) {
+                    if (array[j] > array[i - 1]) {
+                        char temp = array[i - 1];
+                        array[i - 1] = array[j];
+                        array[j] = temp;
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+
 }

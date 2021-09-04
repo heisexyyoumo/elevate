@@ -57,4 +57,46 @@ public class SpiralOrder {
     public boolean isArea(int x, int y, int m, int n) {
         return x >= 0 && y >= 0 && x < m && y < n;
     }
+
+
+    /**
+     * 转圈遍历
+     */
+    public List<Integer> spiralOrder2(int[][] matrix) {
+        List<Integer> res = new ArrayList<>();
+        int m = matrix.length;
+        int n = matrix[0].length;
+        int left = 0;
+        int right = n - 1;
+        int top = 0;
+        int bottom = m - 1;
+        int nums = m * n;
+
+        while (nums >= 1) {
+            for (int i = left; i <= right && nums >= 1; i++) {
+                res.add(matrix[top][i]);
+                nums--;
+            }
+            top++;
+
+            for (int i = top; i <= bottom && nums >= 1; i++) {
+                res.add(matrix[i][right]);
+                nums--;
+            }
+            right--;
+
+            for (int i = right; i >= left && nums >= 1; i--) {
+                res.add(matrix[bottom][i]);
+                nums--;
+            }
+            bottom++;
+
+            for (int i = bottom; i >= top && nums >= 1; i--) {
+                res.add(matrix[i][left]);
+                nums--;
+            }
+            left++;
+        }
+        return res;
+    }
 }

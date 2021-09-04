@@ -6,6 +6,8 @@ import java.util.Queue;
 /**
  * 反转数字
  * 用队列解决
+ *
+ * 32位范围内需要提前判断是否溢出
  */
 
 public class Reverse {
@@ -43,6 +45,22 @@ public class Reverse {
         while (!queue.isEmpty()) {
             int num = queue.poll();
             res = 10 * res + num;
+        }
+        return res;
+    }
+
+    public int reverse2(int x) {
+        int res = 0;
+        while (x != 0) {
+            int temp = x % 10;
+            if (res > Integer.MAX_VALUE / 10 || (res == Integer.MAX_VALUE / 10 && temp > Integer.MAX_VALUE % 10)) {
+                return 0;
+            }
+            if (res < Integer.MIN_VALUE / 10 || (res == Integer.MIN_VALUE / 10 && temp < Integer.MIN_VALUE % 10)) {
+                return 0;
+            }
+            res = res * 10 + temp;
+            x = x / 10;
         }
         return res;
     }

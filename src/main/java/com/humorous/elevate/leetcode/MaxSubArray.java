@@ -29,4 +29,21 @@ public class MaxSubArray {
         return res;
 
     }
+
+    /**
+     * O(1)空间复杂度
+     */
+    public int maxSubArray2(int[] nums) {
+        // memo[i]表示以i结尾的最大值
+        // memo[i] = Math.max(nums[i], memo[i-1] + nums[i])
+
+        int max = nums[0];
+        int pre = nums[0];
+        for (int i = 1; i < nums.length; i++) {
+            pre = Math.max(pre + nums[i], nums[i]);
+            max = Math.max(max, pre);
+        }
+        return max;
+
+    }
 }
