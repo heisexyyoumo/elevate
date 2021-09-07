@@ -50,4 +50,45 @@ public class FindKthLargest {
     }
 
 
+    /**
+     * 快排+二分
+     */
+    public int findKthLargest(int[] a, int l, int r, int K) {
+        if (l > r) {
+            return -1;
+        }
+        int pivot = partition(a, l, r);
+        if (pivot == K - 1) {
+            return a[pivot];
+        } else if (pivot < K - 1) {
+            return findKthLargest(a, pivot + 1, r, K);
+        } else {
+            return findKthLargest(a, l, pivot - 1, K);
+        }
+    }
+
+    public int partition(int[] a, int l, int r) {
+        int temp = a[l];
+        while (l < r) {
+            while (a[r] <= temp && l < r) {
+                r--;
+            }
+            if (l < r) {
+                a[l] = a[r];
+                l++;
+            }
+            while (a[l] > temp && l < r) {
+                l++;
+            }
+            if (l < r) {
+                a[r] = a[l];
+                r--;
+            }
+
+        }
+        a[l] = temp;
+        return l;
+    }
+
+
 }
