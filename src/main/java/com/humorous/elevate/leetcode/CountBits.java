@@ -9,7 +9,7 @@ package com.humorous.elevate.leetcode;
 public class CountBits {
 
     public static void main(String[] args) {
-        int[] countBits = new CountBits().countBits(5);
+        int[] countBits = new CountBits().countBits2(5);
         for (int val : countBits) {
             System.out.println(val);
         }
@@ -34,5 +34,21 @@ public class CountBits {
         }
 
         return dp;
+    }
+
+    public int[] countBits2(int n) {
+        int[] res = new int[n + 1];
+        res[0] = 0;
+        int num = 1;
+        for (int i = 1; i <= n; i++) {
+            // 判断当前是否是2的幂
+            if ((i & (i - 1)) == 0) {
+                num = i;
+            }
+            res[i] = 1 + res[i - num];
+        }
+
+        return res;
+
     }
 }

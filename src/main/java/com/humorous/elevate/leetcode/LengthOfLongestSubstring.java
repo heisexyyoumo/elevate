@@ -21,4 +21,22 @@ public class LengthOfLongestSubstring {
         }
         return res;
     }
+
+
+    public int lengthOfLongestSubstring2(String s) {
+
+        boolean[] freq = new boolean[256];
+        int l = 0;
+        int r = 0;
+        int res = 0;
+        while (r < s.length()) {
+            if (freq[s.charAt(r)]) {
+                freq[s.charAt(l++)] = false;
+            } else {
+                freq[s.charAt(r++)] = true;
+            }
+            res = Math.max(res, r - l);
+        }
+        return res;
+    }
 }

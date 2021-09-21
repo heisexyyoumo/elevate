@@ -16,5 +16,8 @@ public class Test {
 //        float f=b;
 //        double d=b;
         int[][] test = new int[0][0];
+        StringBuilder sb = new StringBuilder();
+        sb.append(1);
+        System.out.println(sb.toString());
     }
 }

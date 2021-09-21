@@ -4,6 +4,7 @@ package com.humorous.elevate.leetcode;
 /**
  * 142. 环形链表 II
  * 快慢指针
+ * 剑指 Offer II 022. 链表中环的入口节点
  */
 public class DetectCycle {
 
@@ -49,5 +50,22 @@ public class DetectCycle {
                 slow = slow.next;
             }
         }
+    }
+
+
+    public ListNode detectCycle2(ListNode head) {
+        ListNode fast = head, slow = head;
+        while (true) {
+            if (fast == null || fast.next == null) return null;
+            fast = fast.next.next;
+            slow = slow.next;
+            if (fast == slow) break;
+        }
+        fast = head;
+        while (slow != fast) {
+            slow = slow.next;
+            fast = fast.next;
+        }
+        return fast;
     }
 }
