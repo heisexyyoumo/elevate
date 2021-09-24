@@ -1,5 +1,8 @@
 package com.humorous.elevate.leetcode;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 /**
  * 55. 跳跃游戏
  * 动态规划+BFS
@@ -27,25 +30,25 @@ public class CanJump {
         return false;
     }
 
-//    public boolean canJump(int[] nums) {
-//        boolean[] memo = new boolean[nums.length];
-//
-//        // 队列中存放nums数组的下标
-//        Queue<Integer> queue = new LinkedList();
-//        memo[0] = true;
-//        queue.add(0);
-//
-//        while (!queue.isEmpty()) {
-//            int index = queue.poll();
-//            for (int i = 1; i <= nums[index]; i++) {
-//                int nextIndex = index + i;
-//                if (!queue.contains(nextIndex) && nextIndex < nums.length) {
-//                    queue.add(nextIndex);
-//                    memo[nextIndex] = true;
-//                }
-//            }
-//        }
-//
-//        return memo[nums.length - 1];
-//    }
+    public boolean canJump2(int[] nums) {
+        boolean[] memo = new boolean[nums.length];
+
+        // 队列中存放nums数组的下标
+        Queue<Integer> queue = new LinkedList();
+        memo[0] = true;
+        queue.add(0);
+
+        while (!queue.isEmpty()) {
+            int index = queue.poll();
+            for (int i = 1; i <= nums[index]; i++) {
+                int nextIndex = index + i;
+                if (!queue.contains(nextIndex) && nextIndex < nums.length) {
+                    queue.add(nextIndex);
+                    memo[nextIndex] = true;
+                }
+            }
+        }
+
+        return memo[nums.length - 1];
+    }
 }
