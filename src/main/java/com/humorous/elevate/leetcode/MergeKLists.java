@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 /**
  * 23. 合并K个升序链表
+ * 剑指 Offer II 078. 合并排序链表
  * 归并，分治的思想
  */
 
@@ -49,4 +50,29 @@ public class MergeKLists {
         cur.next = (node1 == null ? node2 : node1);
         return dummy.next;
     }
+
+    /**
+     * 不使用额外空间
+     */
+    public ListNode mergeKLists2(ListNode[] lists) {
+        if (lists.length == 0) {
+            return null;
+        }
+
+        return mergeKLists2(lists, 0, lists.length - 1);
+    }
+
+    public ListNode mergeKLists2(ListNode[] lists, int l, int r) {
+        if (l > r) {
+            return null;
+        }
+        if (l == r) {
+            return lists[l];
+        }
+        int mid = l + (r - l) / 2;
+        ListNode leftNode = mergeKLists2(lists, l, mid);
+        ListNode rightNode = mergeKLists2(lists, mid + 1, r);
+        return merge(leftNode, rightNode);
+    }
 }
+

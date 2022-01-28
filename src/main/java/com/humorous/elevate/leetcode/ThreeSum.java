@@ -38,7 +38,7 @@ public class ThreeSum {
             int r = nums.length - 1;
             int target = -nums[i];
             while (l < r) {
-                if (nums[l] + nums[r] > 1) {
+                if (nums[l] + nums[r] > target) {
                     r--;
                 } else if (nums[l] + nums[r] < target) {
                     l++;

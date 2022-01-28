@@ -48,4 +48,29 @@ public class PivotIndex {
         }
         return -1;
     }
+
+
+    public int pivotIndex3(int[] nums) {
+        int len = nums.length;
+
+        int[] preSum = new int[len];
+        int[] postSum = new int[len];
+        preSum[0] = 0;
+        for (int i = 1; i < len; i++) {
+            preSum[i] = preSum[i - 1] + nums[i - 1];
+        }
+
+        postSum[len - 1] = 0;
+        for (int i = len - 2; i >= 0; i--) {
+            postSum[i] = postSum[i + 1] + nums[i + 1];
+        }
+
+        for (int i = 0; i < len; i++) {
+            if (preSum[i] == postSum[i]) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
 }

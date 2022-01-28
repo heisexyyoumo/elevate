@@ -2,7 +2,9 @@ package com.humorous.elevate.datastructure.tree;
 
 import javafx.util.Pair;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.List;
 import java.util.Stack;
 
@@ -40,5 +42,24 @@ public class InorderTraversal {
 
         return res;
     }
+
+    public List<Integer> inorderTraversal2(TreeNode root) {
+        Deque<TreeNode> stack = new ArrayDeque<>();
+        TreeNode cur = root;
+        List<Integer> res = new ArrayList<>();
+
+        while (cur != null || !stack.isEmpty()) {
+            while (cur != null) {
+                stack.push(cur);
+                cur = cur.left;
+            }
+            cur = stack.pop();
+            res.add(cur.val);
+            cur = cur.right;
+        }
+
+        return res;
+    }
+
 
 }

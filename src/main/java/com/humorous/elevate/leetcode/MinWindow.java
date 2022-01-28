@@ -7,6 +7,11 @@ public class MinWindow {
 
     public static void main(String[] args) {
         System.out.println("".length());
+
+        String s = "ADOBECODEBANC";
+        String t = "ABC";
+
+        System.out.println(new MinWindow().minWindow2(s, t));
     }
 
     public String minWindow(String s, String t) {
@@ -37,6 +42,46 @@ public class MinWindow {
                 need[s.charAt(l)]++;
                 l++;
                 count++;
+            }
+            r++;
+        }
+        return size == Integer.MAX_VALUE ? "" : s.substring(start, start + size);
+    }
+
+
+    public String minWindow2(String s, String t) {
+        if (s.length() < t.length()) {
+            return "";
+        }
+
+        int[] freq = new int[128];
+        int len = t.length();
+        for (int i = 0; i < len; i++) {
+            freq[t.charAt(i)]--;
+        }
+
+        int l = 0;
+        int r = 0;
+        int count = 0;
+        int start = 0;
+        int size = Integer.MAX_VALUE;
+        while (r < s.length()) {
+            if (freq[s.charAt(r)] < 0) {
+                count++;
+            }
+            freq[s.charAt(r)]++;
+
+            if (count == len) {
+                while (l < r && freq[s.charAt(l)] > 0) {
+                    freq[s.charAt(l++)]--;
+                }
+                if (r - l + 1 < size) {
+                    start = l;
+                    size = r - l + 1;
+                }
+
+                count--;
+                freq[s.charAt(l++)]--;
             }
             r++;
         }

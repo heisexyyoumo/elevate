@@ -34,4 +34,59 @@ public class SearchRange {
         }
         return ans;
     }
+
+
+    // 找 target 第一次出现的位置和最后一次出现的位置的时候
+    public int[] searchRange2(int[] nums, int target) {
+        int n = nums.length;
+        int[] res = new int[]{-1, -1};
+        if (n == 0) {
+            return res;
+        }
+
+        int first = findFirst(nums, target, n);
+        int last = findLast(nums, target, n);
+        res[0] = first;
+        res[1] = last;
+        return res;
+    }
+
+    public int findFirst(int[] nums, int target, int n) {
+        int l = 0;
+        int r = n - 1;
+        while (l < r) {
+            int m = l + (r - l) / 2;
+            if (nums[m] >= target) {
+                r = m;
+            } else {
+                l = m + 1;
+            }
+        }
+
+        if (nums[l] != target) {
+            return -1;
+        } else {
+            return l;
+        }
+    }
+
+    public int findLast(int[] nums, int target, int n) {
+        int l = 0;
+        int r = n - 1;
+        while (l < r) {
+            int m = l + (r - l + 1) / 2;
+            if (nums[m] <= target) {
+                l = m;
+            } else {
+                r = m - 1;
+            }
+        }
+
+        if (nums[l] != target) {
+            return -1;
+        } else {
+            return l;
+        }
+    }
+
 }

@@ -32,6 +32,34 @@ public class MySqrt {
         return -1;
     }
 
+
+    /**
+     * 使用二分查找
+     */
+    public int mySqrt2(int x) {
+        // 从[0,x/2]之间找最后的一个数的平方小于等于x
+        if (x == 0) {
+            return 0;
+        }
+        if (x == 1) {
+            return 1;
+        }
+        int l = 1;
+        int r = x / 2;
+        while (l < r) {
+            int m = l + (r - l + 1) / 2;
+
+            // 预防整型溢出
+            if (m <= x / m) {
+                l = m;
+            } else {
+                r = m - 1;
+            }
+        }
+
+        return l;
+    }
+
 }
 
 

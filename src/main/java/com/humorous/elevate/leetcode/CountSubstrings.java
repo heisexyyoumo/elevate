@@ -8,7 +8,7 @@ public class CountSubstrings {
 
     public static void main(String[] args) {
         String s = "aaa";
-        System.out.println(new CountSubstrings().countSubstrings(s));
+        System.out.println(new CountSubstrings().countSubstrings2(s));
     }
 
     public int countSubstrings(String s) {
@@ -37,5 +37,40 @@ public class CountSubstrings {
         }
 
         return count;
+    }
+
+
+    public int countSubstrings2(String s) {
+        int len = s.length();
+        boolean[][] arr = new boolean[len][len];
+
+        // 初始化
+        for(int i = 0; i < len; i++){
+            arr[i][i] = true;
+        }
+
+        // 递推
+        // 判断[i,j]是否符合回文
+        for(int j = 1; j < len; j++){
+            for(int i = 0; i < j; i++){
+                if(s.charAt(j) != s.charAt(i)){
+                    arr[i][j] = false;
+                }else{
+                    arr[i][j] = (i + 1 >= j - 1 ? true : arr[i+1][j-1]);
+                }
+            }
+        }
+
+
+        int res = 0;
+        for(int i = 0; i < len; i++){
+            for(int j = 0; j <=len; j++){
+                if(arr[i][j]){
+                    res++;
+                }
+            }
+        }
+
+        return res;
     }
 }

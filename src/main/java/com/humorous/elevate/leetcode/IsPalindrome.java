@@ -3,9 +3,9 @@ package com.humorous.elevate.leetcode;
 public class IsPalindrome {
 
     public static void main(String[] args) {
-        String s = "A man, a plan, a canal: Panama";
-//        String s = "0P";
-        System.out.println(new IsPalindrome().isPalindrome(s));
+//        String s = "A man, a plan, a canal: Panama";
+        String s = "0P";
+        System.out.println(new IsPalindrome().isPalindrome2(s));
     }
 
     public boolean isPalindrome(String s) {
@@ -45,53 +45,72 @@ public class IsPalindrome {
         return true;
     }
 
-//    public boolean isPalindrome(String s) {
-//        int len = s.length();
-//        if (len == 0 || len == 1) {
-//            return true;
-//        }
-//        char[] chars = s.toCharArray();
-//        int l = 0;
-//        int r = len - 1;
-//        while (l < r) {
-//            while (!isNumberOrCharcter(chars[l])) {
-//                l++;
-//                if (l >= len) {
-//                    return true;
-//                }
-//            }
-//            while (!isNumberOrCharcter(chars[r])) {
-//                r--;
-//            }
-//            if (isEqual(chars[l], chars[r])) {
-//                l++;
-//                r--;
-//            } else {
-//                return false;
-//            }
-//        }
-//        return true;
-//    }
-//
-//    public boolean isNumberOrCharcter(char c) {
-//        if (c >= '0' && c <= '9') {
-//            return true;
-//        } else if (c >= 'a' && c <= 'z') {
-//            return true;
-//        } else if (c >= 'A' && c <= 'Z') {
-//            return true;
-//        } else {
-//            return false;
-//        }
-//    }
-//
-//    public boolean isEqual(char lv, char rv) {
-//        if (lv == rv) {
-//            return true;
-//        } else if (lv >= 'A' && lv <= 'z' && rv >= 'A' && rv <= 'z'  && Math.abs(lv - rv) == 32){
-//            return true;
-//        } else{
-//            return false;
-//        }
-//    }
+    public boolean isPalindrome2(String s) {
+        int l = 0;
+        int r = s.length() - 1;
+
+        while(l < r){
+            while(l < r && !judge(s.charAt(l))){
+                l++;
+            }
+            while(l < r && !judge(s.charAt(r))){
+                r--;
+            }
+            if(l == r){
+                break;
+            }
+
+            char cl = s.charAt(l);
+            char cr = s.charAt(r);
+
+            if(isNumber(cl) && isNumber(cr)){
+                if(cl != cr){
+                    return false;
+                }else{
+                    l++;
+                    r--;
+                    continue;
+                }
+            }
+
+            if(isLetter(cl) && isLetter(cr)){
+                if(cl != cr && Math.abs(cl - cr) != Math.abs('a' - 'A')){
+                    return false;
+                }else{
+                    l++;
+                    r--;
+                    continue;
+                }
+            }
+
+            return false;
+
+        }
+
+        return true;
+    }
+
+
+    private boolean judge(char ch){
+        return isLetter(ch) || isNumber(ch);
+    }
+
+    private boolean isNumber(char ch){
+        if(ch - '0' >= 0 && '9' - ch >= 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    private boolean isLetter(char ch){
+        if(ch - 'a' >=0 && 'z' - ch >= 0){
+            return true;
+        }else if(ch - 'A' >= 0 && 'Z' - ch >= 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
 }

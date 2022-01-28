@@ -6,6 +6,17 @@ package com.humorous.elevate.leetcode;
  */
 public class Insert {
 
+    public static void main(String[] args) {
+        Node node5 = new Node(5);
+        Node node1 = new Node(1);
+        Node node3 = new Node(3);
+        node5.next = node1;
+        node1.next = node3;
+        node3.next = node5;
+
+        new Insert().insert2(node5,0);
+    }
+
     public Node insert(Node head, int insertVal) {
         if (head == null) {
             Node node = new Node(insertVal);
@@ -52,5 +63,49 @@ public class Insert {
         node.next = next;
 
         return head;
+    }
+
+    public Node insert2(Node head, int insertVal) {
+        if(head == null){
+            Node node = new Node(insertVal);
+            node.next = node;
+            return node;
+        }
+
+        Node cur = head;
+        Node min = cur;
+        Node max = cur;
+        while(cur.next != head){
+            if(cur.next.val >= max.val){
+                max = cur.next;
+            }
+            if(cur.next.val < min.val){
+                min = cur.next;
+            }
+            cur = cur.next;
+        }
+
+        if(insertVal >= max.val || insertVal <= min.val){
+            Node node = new Node(insertVal);
+            max.next = node;
+            node.next = min;
+            return head;
+        }else {
+            cur = min;
+            while(cur.next.val < insertVal){
+                cur = cur.next;
+            }
+
+            Node next = cur.next;
+            Node node = new Node(insertVal);
+            node.next = next;
+            cur.next = node;
+            return head;
+
+
+        }
+
+
+
     }
 }
