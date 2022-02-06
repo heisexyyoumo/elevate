@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 /**
  * 322. 零钱兑换
+ * 剑指 Offer II 103. 最少的硬币数目
  */
 public class CoinChange {
 
@@ -37,5 +38,21 @@ public class CoinChange {
         }
 
         return dp[amount];
+    }
+
+    public int coinChange2(int[] coins, int amount) {
+        // 无限背包问题
+        int n = coins.length;
+        // dp[i]表示金额为i的最少硬币个数
+        int[] dp = new int[amount + 1];
+        Arrays.fill(dp, amount + 1);
+        dp[0] = 0;
+        for (int i = 0; i < n; i++) {
+            for (int j = coins[i]; j <= amount; j++) {
+                dp[j] = Math.min(dp[j], dp[j - coins[i]] + 1);
+            }
+        }
+
+        return dp[amount] == amount + 1 ? -1 : dp[amount];
     }
 }

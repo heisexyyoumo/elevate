@@ -1,34 +1,29 @@
 package com.humorous.elevate.leetcode;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
 
 /**
- * 46. 全排列
- * 剑指 Offer II 083. 没有重复元素集合的全排列
+ * 47. 全排列 II
  */
+public class PermuteUnique {
 
-public class Permute {
-
-
-    public static void main(String[] args) {
-        int[] nums = {1, 2, 3};
-        List<List<Integer>> lists = new Permute().permute(nums);
-        lists.forEach(e -> System.out.println(e.toString()));
-    }
-
+    boolean[] visited;
     List<List<Integer>> res;
-    boolean[] visisted;
 
-    public List<List<Integer>> permute(int[] nums) {
+    public List<List<Integer>> permuteUnique(int[] nums) {
         res = new ArrayList<>();
-        visisted = new boolean[nums.length];
+        visited = new boolean[nums.length];
 
+        Arrays.sort(nums);
         track(nums, new LinkedList<>());
+
         return res;
     }
+
 
     public void track(int[] nums, LinkedList<Integer> list) {
         if (list.size() == nums.length) {
@@ -37,17 +32,18 @@ public class Permute {
         }
 
         for (int i = 0; i < nums.length; i++) {
-            if (visisted[i]) {
+            if (visited[i]) {
                 continue;
             }
-
-            visisted[i] = true;
+            // 剪枝
+            if (i > 0 && nums[i] == nums[i - 1] && !visited[i - 1]) {
+                continue;
+            }
+            visited[i] = true;
             list.addLast(nums[i]);
             track(nums, list);
+            visited[i] = false;
             list.removeLast();
-            visisted[i] = false;
         }
     }
-
-
 }

@@ -37,11 +37,16 @@ public class BaseTest {
 //        System.out.println(s);
 //        BaseTest baseTest = new BaseTest(3);
 //        System.out.println(baseTest.size);
-
-        long a = -2147483648, b = 2147483647;
-        long res = (long) Math.abs(a - b);
-        System.out.println(res);
-        System.out.println(Math.abs(a - b));
+//
+//        long a = -2147483648, b = 2147483647;
+//        long res = (long) Math.abs(a - b);
+//        System.out.println(res);
+//        System.out.println(Math.abs(a - b));
+//        String s = "hhahg";
+//        String str = s.substring(0,5);
+//        System.out.println(str);
+        int i =1;
+        System.out.println();
 
     }
 

@@ -1,11 +1,13 @@
 package com.humorous.elevate.leetcode;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
 /**
  * 93. 复原 IP 地址
+ * 剑指 Offer II 087. 复原 IP
  */
 public class RestoreIpAddresses {
 
@@ -62,5 +64,58 @@ public class RestoreIpAddresses {
         }
         int val = Integer.parseInt(str);
         return 0 <= val && val <= 255;
+    }
+
+
+    public List<String> restoreIpAddresses2(String s) {
+        res = new ArrayList<>();
+
+        int n = s.length();
+        if (n < 4) {
+            return res;
+        }
+
+        track(s, 0, n, new LinkedList<>());
+        return res;
+    }
+
+
+    public void track(String s, int index, int n, LinkedList<String> list) {
+        if (list.size() == 4) {
+            if (index != n) {
+                return;
+            }
+            String ip = String.join(".", list);
+            res.add(ip);
+            return;
+        }
+
+        for (int i = 0; i < 3; i++) {
+            if (index + i >= n) {
+                break;
+            }
+            int end = index + i;
+            if (check(s, index, end)) {
+                String sub = s.substring(index, end + 1);
+                list.addLast(sub);
+                track(s, end + 1, n, list);
+                list.removeLast();
+            }
+        }
+    }
+
+    public boolean check(String s, int start, int end) {
+        if (start == end) {
+            return true;
+        }
+        if (s.charAt(start) == '0') {
+            return false;
+        }
+        int val = 0;
+        for (int i = start; i <= end; i++) {
+            val = 10 * val + (s.charAt(i) - '0');
+        }
+
+        return val <= 255;
     }
 }

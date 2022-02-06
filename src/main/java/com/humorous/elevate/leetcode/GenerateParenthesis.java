@@ -7,7 +7,7 @@ public class GenerateParenthesis {
 
     public static void main(String[] args) {
         int n = 3;
-        System.out.println(new GenerateParenthesis().generateParenthesis(n).toString());
+        System.out.println(new GenerateParenthesis().generateParenthesis2(n).toString());
     }
 
     public List<String> generateParenthesis(int n) {
@@ -49,4 +49,47 @@ public class GenerateParenthesis {
             dfs(curStr + ")", left, right - 1, res);
         }
     }
+
+
+    List<String> res;
+
+    public List<String> generateParenthesis2(int n) {
+        res = new ArrayList<>();
+        StringBuilder sb = new StringBuilder();
+        track(0, 0, n, sb);
+        return res;
+    }
+
+    public void track(int left, int right, int n, StringBuilder sb) {
+        if (left == n && right == n) {
+            res.add(sb.toString());
+            return;
+        }
+
+        if (left == n) {
+            sb.append(')');
+            track(left, right + 1, n, sb);
+            sb.deleteCharAt(sb.length() - 1);
+            return;
+        }
+
+        if (left == right) {
+            sb.append('(');
+            track(left + 1, right, n, sb);
+            sb.deleteCharAt(sb.length() - 1);
+        } else {
+            for (int i = 0; i < 2; i++) {
+                if (i == 0) {
+                    sb.append('(');
+                    track(left + 1, right, n, sb);
+
+                } else {
+                    sb.append(')');
+                    track(left, right + 1, n, sb);
+                }
+                sb.deleteCharAt(sb.length() - 1);
+            }
+        }
+    }
+
 }
