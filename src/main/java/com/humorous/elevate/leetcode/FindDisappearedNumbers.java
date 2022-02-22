@@ -29,4 +29,28 @@ public class FindDisappearedNumbers {
         nums[i] = nums[j];
         nums[j] = temp;
     }
+
+
+    public List<Integer> findDisappearedNumbers2(int[] nums) {
+        int n = nums.length;
+        for (int i = 0; i < n; i++) {
+            while (nums[i] != i + 1) {
+                int index = nums[i] - 1;
+                if (nums[index] == index + 1) {
+                    break;
+                }
+                int temp = nums[index];
+                nums[index] = nums[i];
+                nums[i] = temp;
+            }
+        }
+        List<Integer> res = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            if (nums[i] != i + 1) {
+                res.add(i + 1);
+            }
+        }
+
+        return res;
+    }
 }

@@ -30,6 +30,36 @@ public class FindTargetSumWays {
         }
 
         return dp[neg];
+    }
 
+
+    /**
+     * 另一种思路
+     */
+    public int findTargetSumWays2(int[] nums, int target) {
+        // 假如数组中的选择的正数和为x，负数的和为y，全部一起的和为sum
+        // x + y = sum , x - y = target ==> x = (target + sum) / 2 && (target + sum) % 2 == 0
+        // 转换01背包问题，即在数组中找和为x的组合数
+
+        int sum = 0;
+        for (int num : nums) {
+            sum += num;
+        }
+        if ((sum + target) % 2 != 0 || sum + target < 0) {
+            return 0;
+        }
+
+        int x = (sum + target) / 2;
+        int[] dp = new int[x + 1];
+        // 初始化
+        dp[0] = 1;
+
+        for (int num : nums) {
+            for (int j = x; j >= num; j--) {
+                dp[j] += dp[j - num];
+            }
+        }
+
+        return dp[x];
     }
 }

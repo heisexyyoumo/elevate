@@ -25,7 +25,7 @@ public class LadderLength {
         wordList.add("cog");
 
         String beginWord = "hit", endWord = "cog";
-        System.out.println(new LadderLength().ladderLength(beginWord, endWord, wordList));
+        System.out.println(new LadderLength().ladderLength2(beginWord, endWord, wordList));
     }
 
     public int ladderLength(String beginWord, String endWord, List<String> wordList) {
@@ -33,24 +33,10 @@ public class LadderLength {
             return 0;
         }
 
-        int n = wordList.size();
-        Map<String, List<String>> map = new HashMap<>();
-        Set<String> visited = new HashSet<>();
-        for (int i = 0; i < n; i++) {
-            String str1 = wordList.get(i);
-            List<String> list = new ArrayList<>();
-            for (int j = 0; j < n; j++) {
-                if (i == j) {
-                    continue;
-                }
-                String str2 = wordList.get(j);
-                if (judge(str1, str2)) {
-                    list.add(str2);
-                }
-            }
-            map.put(str1, list);
-        }
 
+        Map<String, List<String>> map = map(wordList);
+
+        Set<String> visited = new HashSet<>();
         int res = 0;
         Queue<String> queue = new LinkedList<>();
         for (String word : wordList) {
@@ -87,6 +73,27 @@ public class LadderLength {
         return 0;
     }
 
+    public Map<String, List<String>> map(List<String> wordList) {
+        int n = wordList.size();
+        Map<String, List<String>> map = new HashMap<>();
+        for (int i = 0; i < n; i++) {
+            String str1 = wordList.get(i);
+            List<String> list = new ArrayList<>();
+            for (int j = 0; j < n; j++) {
+                if (i == j) {
+                    continue;
+                }
+                String str2 = wordList.get(j);
+                if (judge(str1, str2)) {
+                    list.add(str2);
+                }
+            }
+            map.put(str1, list);
+        }
+
+        return map;
+    }
+
 
     public boolean judge(String str1, String str2) {
         if (str1.length() != str2.length()) {
@@ -105,6 +112,69 @@ public class LadderLength {
         }
 
         return count == 1;
+    }
+
+
+    /**
+     * 双向bfs解法
+     */
+    public int ladderLength2(String beginWord, String endWord, List<String> wordList) {
+        Set<String> set = new HashSet<>(wordList);
+        if (set.size() == 0 || !set.contains(endWord)) {
+            return 0;
+        }
+
+        Queue<String> beginQueue = new LinkedList<>();
+        Set<String> beginVisited = new HashSet<>();
+        for (String word : wordList) {
+            if (judge(beginWord, word)) {
+                beginQueue.add(word);
+                beginVisited.add(word);
+            }
+        }
+
+        Queue<String> endQueue = new LinkedList<>();
+        Set<String> endVisited = new HashSet<>();
+        endQueue.add(endWord);
+        endVisited.add(endWord);
+
+
+//        Map<String, List<String>> map = map(wordList);
+        int res = 1;
+        while (!beginQueue.isEmpty() && !endQueue.isEmpty()) {
+            if (beginVisited.size() > endVisited.size()) {
+                Set<String> visitedTemp = beginVisited;
+                beginVisited = endVisited;
+                endVisited = visitedTemp;
+
+                Queue<String> queueTemp = beginQueue;
+                beginQueue = endQueue;
+                endQueue = queueTemp;
+            }
+            res++;
+            int size = beginQueue.size();
+            for (int i = 0; i < size; i++) {
+                String poll = beginQueue.poll();
+                if (endVisited.contains(poll)) {
+                    return res;
+                }
+//                List<String> list = map.get(poll);
+                for (String word : wordList) {
+                    if(!judge(poll,word)){
+                        continue;
+                    }
+                    if (!beginVisited.contains(word)) {
+                        beginQueue.add(word);
+                        beginVisited.add(word);
+                    }
+                }
+            }
+
+        }
+
+        return 0;
+
+
     }
 }
 

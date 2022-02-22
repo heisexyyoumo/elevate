@@ -5,39 +5,31 @@ import java.util.List;
 
 /**
  * 442. 数组中重复的数据
+ * 和448. 找到所有数组中消失的数字(FindDisappearedNumbers)思路一样
  */
 public class FindDuplicates {
 
     public List<Integer> findDuplicates(int[] nums) {
-
-        List<Integer> list = new ArrayList<>();
-        int len = nums.length;
-        if (len == 0) {
-            return list;
-        }
-
-        int index = 0;
-        while (index < len) {
-            if (index + 1 == nums[index]) {
-                index++;
-                continue;
-            }
-            if (nums[index] == nums[nums[index] - 1]) {
-                if (!list.contains(nums[index])) {
-                    list.add(nums[index]);
+        int n = nums.length;
+        for (int i = 0; i < n; i++) {
+            while (nums[i] != i + 1) {
+                int index = nums[i] - 1;
+                if (nums[index] == index + 1) {
+                    break;
                 }
-                index++;
-                continue;
+                int temp = nums[index];
+                nums[index] = nums[i];
+                nums[i] = temp;
             }
-            swap(nums, nums[index] - 1, index);
         }
 
-        return list;
-    }
 
-    private void swap(int[] nums, int i, int j) {
-        int temp = nums[i];
-        nums[i] = nums[j];
-        nums[j] = temp;
+        List<Integer> res = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            if (nums[i] != i + 1) {
+                res.add(nums[i]);
+            }
+        }
+        return res;
     }
 }

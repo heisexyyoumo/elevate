@@ -1,5 +1,7 @@
 package com.humorous.elevate.leetcode;
 
+import java.util.Arrays;
+
 /**
  * leetcode 787. K 站中转内最便宜的航班
  */
@@ -59,5 +61,32 @@ public class FindCheapestPrice {
                 visited[j] = false;
             }
         }
+    }
+
+
+    /**
+     * 动态规划
+     */
+    public int findCheapestPrice2(int n, int[][] flights, int src, int dst, int k) {
+        //  f[t][i] 表示通过恰好t次航班，从出发城市src 到达城市 i需要的最小花费
+        final int INF = 10000 * 101 + 1;
+        int[][] f = new int[k + 2][n];
+        for (int i = 0; i < k + 2; ++i) {
+            Arrays.fill(f[i], INF);
+        }
+        f[0][src] = 0;
+        for (int t = 1; t <= k + 1; ++t) {
+            for (int[] flight : flights) {
+                int j = flight[0], i = flight[1], cost = flight[2];
+                f[t][i] = Math.min(f[t][i], f[t - 1][j] + cost);
+            }
+        }
+        int ans = INF;
+        // 由于我们最多只能中转k次，也就是最多搭乘 k+1次航班，最终的答案即为
+        // f[1][dst],f[2][dst],⋯,f[k+1][dst]中的最小值
+        for (int t = 1; t <= k + 1; ++t) {
+            ans = Math.min(ans, f[t][dst]);
+        }
+        return ans == INF ? -1 : ans;
     }
 }

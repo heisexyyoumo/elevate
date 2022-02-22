@@ -7,28 +7,31 @@ import java.util.Queue;
 
 /**
  * 210. 课程表 II
+ * 剑指 Offer II 113. 课程顺序
  */
 public class FindOrder {
 
     public int[] findOrder(int numCourses, int[][] prerequisites) {
-        if (numCourses == 0) {
-            return new int[]{};
+        int[] res = new int[numCourses];
+        if (prerequisites.length == 0) {
+            for (int i = 0; i < numCourses; i++) {
+                res[i] = i;
+            }
+            return res;
         }
-        int[] inDegrees = new int[numCourses];
-        List<List<Integer>> adjacency = new ArrayList<>();
 
-        // 初始化邻接表
+        // 邻接表，便于快速读取数据
+        List<List<Integer>> edges = new ArrayList<>(numCourses);
         for (int i = 0; i < numCourses; i++) {
-            adjacency.add(new ArrayList<>());
+            edges.add(new ArrayList<>());
         }
 
-        // 填充入度表和邻接表
-        for (int[] array : prerequisites) {
-            inDegrees[array[0]]++;
-            adjacency.get(array[1]).add(array[0]);
+        int[] inDegrees = new int[numCourses];
+        for (int[] arr : prerequisites) {
+            inDegrees[arr[0]]++;
+            edges.get(arr[1]).add(arr[0]);
         }
 
-        // BFS
         Queue<Integer> queue = new LinkedList<>();
         for (int i = 0; i < numCourses; i++) {
             if (inDegrees[i] == 0) {
@@ -36,25 +39,29 @@ public class FindOrder {
             }
         }
 
-        List<Integer> result = new ArrayList<>();
+        List<Integer> list = new ArrayList<>();
         while (!queue.isEmpty()) {
-            int pre = queue.poll();
-            result.add(pre);
-            List<Integer> list = adjacency.get(pre);
-            for (int cur : list) {
-                if (--inDegrees[cur] == 0) {
-                    queue.add(cur);
+            int size = queue.size();
+            while (size-- > 0) {
+                int num = queue.poll();
+                list.add(num);
+                List<Integer> nextList = edges.get(num);
+                for (int next : nextList) {
+                    inDegrees[next]--;
+                    if (inDegrees[next] == 0) {
+                        queue.add(next);
+                    }
                 }
             }
         }
-        if (result.size() < numCourses) {
-            return new int[]{};
-        } else {
-            int[] res = new int[result.size()];
-            for (int i = 0; i < result.size(); i++) {
-                res[i] = result.get(i);
-            }
-            return res;
+
+        if (list.size() != numCourses) {
+            return new int[0];
         }
+        for (int i = 0; i < numCourses; i++) {
+            res[i] = list.get(i);
+        }
+
+        return res;
     }
 }

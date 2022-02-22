@@ -1,6 +1,7 @@
 package com.humorous.elevate.leetcode;
 
 /**
+ * 416. 分割等和子集
  * 剑指 Offer II 101. 分割等和子集
  * 01背包问题
  */
@@ -29,8 +30,8 @@ public class CanPartition {
         // dp[i]表示能否挑选出和为i的组合
         boolean[] dp = new boolean[target + 1];
         // 初始化
-        for (int j = 1; j <= target; j++) {
-            dp[j] = nums[0] == j;
+        if (nums[0] <= target) {
+            dp[nums[0]] = true;
         }
 
         for (int i = 1; i < n; i++) {

@@ -1,15 +1,14 @@
 package com.humorous.elevate.leetcode;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.LinkedList;
 
+/**
+ * 456. 132 模式
+ */
 public class Find132pattern {
 
-    public static void main(String[] args) {
-//        int[] nums = {1, 2, 3, 4};
-//        int[] nums = {3, 1, 4, 2};
-        int[] nums = {-1, 3, 2, 0};
-        System.out.println(new Find132pattern().find132pattern(nums));
-    }
 
     boolean flag = false;
 
@@ -49,5 +48,25 @@ public class Find132pattern {
         int n2 = list.get(1);
         int n3 = list.get(2);
         return n1 < n3 && n3 < n2;
+    }
+
+    /**
+     * 单调栈解决
+     */
+    public boolean find132pattern2(int[] nums) {
+        Deque<Integer> stack = new ArrayDeque<>();
+        int k = Integer.MIN_VALUE;
+        for (int i = nums.length - 1; i >= 0; i--) {
+            if (nums[i] < k) {
+                return true;
+            }
+
+            while (!stack.isEmpty() && nums[i] > stack.peek()) {
+                k = stack.pop();
+            }
+            stack.push(nums[i]);
+        }
+
+        return false;
     }
 }

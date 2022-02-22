@@ -6,39 +6,34 @@ package com.humorous.elevate.leetcode;
 public class ZConvert {
 
     public static void main(String[] args) {
-        String s = "PAYPALISHIRING";
-        System.out.println(new ZConvert().convert(s, 4));
+        String s = "A";
+        System.out.println(new ZConvert().convert(s, 1));
     }
 
     public String convert(String s, int numRows) {
         if (numRows == 1) {
             return s;
         }
+        // 找规律题，寻找时建议用下标来模拟验证
+        int len = s.length();
         StringBuilder sb = new StringBuilder();
-        int step = (numRows - 1) * 2;
         for (int i = 0; i < numRows; i++) {
             if (i == 0 || i == numRows - 1) {
-                int index = i;
-                while (index < s.length()) {
-                    sb.append(s.charAt(index));
-                    index += step;
+                for (int j = i; j < len; j += 2 * (numRows - 1)) {
+                    sb.append(s.charAt(j));
                 }
             } else {
-                int index1 = i;
-                int index2 = step - i;
-                while (index1 < s.length() || index2 < s.length()) {
-                    if (index1 < s.length()) {
-                        sb.append(s.charAt(index1));
-                        index1 += step;
+                for (int j = i, k = 2 * (numRows - 1) - i; j < len || k < len; j += 2 * (numRows - 1), k += 2 * (numRows - 1)) {
+                    if (j < len) {
+                        sb.append(s.charAt(j));
                     }
-                    if (index2 < s.length()) {
-                        sb.append(s.charAt(index2));
-                        index2 += step;
+                    if (k < len) {
+                        sb.append(s.charAt(k));
                     }
-
                 }
             }
         }
+
         return sb.toString();
     }
 }

@@ -6,43 +6,22 @@ package com.humorous.elevate.leetcode;
  */
 public class CountAndSay {
 
-    public static void main(String[] args) {
-        System.out.println(new CountAndSay().countAndSay(5));
-    }
-
     public String countAndSay(int n) {
-
-        if (n == 1) {
-            return "1";
-        }
-
-        return gen(countAndSay(n - 1));
-    }
-
-    public String gen(String str) {
-        char[] chars = str.toCharArray();
-        int index = 0;
-        int count = 1;  //相同的数量
-        StringBuilder sb = new StringBuilder();
-        while (index < chars.length) {
-            if (index + 1 < chars.length) {
-                if (chars[index] == chars[index + 1]) {
-                    index++;
-                    count++;
-                } else {
-                    sb.append(count);
-                    sb.append(chars[index]);
-                    index++;
-                    count = 1;
+        String s = "1";
+        for (int i = 0; i < n - 1; i++) {
+            StringBuilder sb = new StringBuilder();
+            for (int j = 0; j < s.length(); j++) {
+                int k = j;
+                while (k < s.length() && s.charAt(k) == s.charAt(j)) {
+                    k++;
                 }
-            } else {
-                sb.append(count);
-                sb.append(chars[index]);
-                index++;
+                sb.append(k - j);
+                sb.append(s.charAt(j));
+                j = k - 1;
             }
+            s = sb.toString();
         }
 
-        return sb.toString();
-
+        return s;
     }
 }

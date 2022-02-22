@@ -2,70 +2,60 @@ package com.humorous.elevate.leetcode;
 
 /**
  * 809. 情感丰富的文字
+ *
+ * while(A 没完 && B 没完)
+ *     A 的当前字符
+ *     B 的当前字符
+ *
+ *     A 的当前字符长度
+ *     B 的当前字符长度
+ *
+ *     判读符合比较条件吗
+ * 判断 A B 都走完了吗
+ *
  */
 
 public class ExpressiveWords {
 
-
-    public static void main(String[] args) {
-        String S = "heeellooo";
-        String[] words = {"hello", "hi", "helo"};
-        System.out.println(new ExpressiveWords().expressiveWords(S, words));
-    }
-
-    public int expressiveWords(String S, String[] words) {
-        int res = 0;
-        char[] tars = S.toCharArray();
-        for (String s : words) {
-            char[] srcs = s.toCharArray();
-            if (stretchyJudge(tars, srcs)) {
-                res++;
+    public int expressiveWords(String s, String[] words) {
+        int cnt = 0;
+        for(String word : words){
+            if(word.length() <= s.length() && judge(s,word)){
+                cnt++;
             }
         }
-        return res;
+        return cnt;
     }
 
-    private boolean stretchyJudge(char[] ct, char[] cs) {
-        int tl = ct.length;
-        int sl = cs.length;
-        int t = 0;
-        int s = 0;
-        while (t < tl && s < sl) {
-            if (ct[t] != cs[s]) {
+    private boolean judge(String s1,String s2){
+        int l1 = 0;
+        int l2 = 0;
+        int len1 = s1.length();
+        int len2 = s2.length();
+        while (l1 < len1 && l2 < len2){
+            char c1 = s1.charAt(l1);
+            char c2 = s2.charAt(l2);
+            if(c1 != c2){
                 return false;
             }
-            int tn = 1;
-            int sn = 1;
-            while (t + 1 < tl) {
-                if (ct[t] == ct[t + 1]) {
-                    t++;
-                    tn++;
-                } else {
-                    break;
-                }
-            }
-            while (s + 1 < sl) {
-                if (cs[s] == cs[s + 1]) {
-                    s++;
-                    sn++;
-                } else {
-                    break;
-                }
+
+            int cnt1 = 0;
+            while (l1 < len1 && s1.charAt(l1) == c1){
+                cnt1++;
+                l1++;
             }
 
-            t++;
-            s++;
+            int cnt2 = 0;
+            while (l2 < len2 && s2.charAt(l2) == c2){
+                cnt2++;
+                l2++;
+            }
 
-            if (tn == sn || (tn >= 3 && tn > sn)) {
-                continue;
-            } else {
+            if (cnt1 < cnt2 || (cnt1 < 3 && cnt1 != cnt2)){
                 return false;
             }
         }
-        if (t == tl && s == sl) {
-            return true;
-        } else {
-            return false;
-        }
+
+        return l1 == len1 && l2 == len2;
     }
 }

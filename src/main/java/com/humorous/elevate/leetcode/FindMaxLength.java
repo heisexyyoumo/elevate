@@ -58,4 +58,28 @@ public class FindMaxLength {
 
         return ans;
     }
+
+    /**
+     * 前缀和 + hash
+     */
+    public int findMaxLength3(int[] nums) {
+        // 前缀和求解
+        int n = nums.length;
+        int[] sum = new int[n + 1];
+        for (int i = 0; i < n; i++) {
+            sum[i + 1] = sum[i] + (nums[i] == 1 ? 1 : -1);
+        }
+
+        Map<Integer, Integer> map = new HashMap<>();
+        int res = 0;
+        for (int i = 0; i <= n; i++) {
+            if (!map.containsKey(sum[i])) {
+                map.put(sum[i], i);
+            } else {
+                res = Math.max(res, i - map.get(sum[i]));
+            }
+        }
+
+        return res;
+    }
 }

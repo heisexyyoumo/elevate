@@ -1,7 +1,6 @@
 package com.humorous.elevate.leetcode;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -10,19 +9,18 @@ import java.util.List;
 public class GenerateYHTrangle {
 
     public List<List<Integer>> generate(int numRows) {
-        List<List<Integer>> res = new ArrayList<>();
-        List<Integer> list1 = Collections.singletonList(1);
-        res.add(list1);
-
-        for (int i = 1; i < numRows; i++) {
-            List<Integer> list = new ArrayList<>();
-            List<Integer> pre = res.get(i - 1);
-            for (int j = 0; j <= i; j++) {
-                int val = (j - 1 >= 0 ? pre.get(j - 1) : 0) + (j >= pre.size() ? 0 : pre.get(j));
-                list.add(val);
+        List<List<Integer>> ret = new ArrayList<List<Integer>>();
+        for (int i = 0; i < numRows; ++i) {
+            List<Integer> row = new ArrayList<Integer>();
+            for (int j = 0; j <= i; ++j) {
+                if (j == 0 || j == i) {
+                    row.add(1);
+                } else {
+                    row.add(ret.get(i - 1).get(j - 1) + ret.get(i - 1).get(j));
+                }
             }
-            res.add(list);
+            ret.add(row);
         }
-        return res;
+        return ret;
     }
 }

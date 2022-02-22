@@ -6,15 +6,10 @@ import java.util.List;
 
 /**
  * 面试题 04.01. 节点间通路
+ * 图的问题一般建立邻接表或邻接矩阵来辅助解决
  */
 
 public class FindWhetherExistsPath {
-
-    public static void main(String[] args) {
-        int[][] graph = {{0, 1}, {1, 0}, {1, 3}, {3, 2}};
-        System.out.println(new FindWhetherExistsPath().findWhetherExistsPath(4, graph, 0, 12));
-        System.gc();
-    }
 
     //利用visited记录路径访问情况
     boolean[] visited = null;
@@ -48,7 +43,6 @@ public class FindWhetherExistsPath {
                     return true;
                 }
             }
-            visited[start] = true;
         }
         return false;
     }

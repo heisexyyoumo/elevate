@@ -39,4 +39,18 @@ public class LengthOfLongestSubstring {
         }
         return res;
     }
+
+    public int lengthOfLongestSubstring3(String s) {
+        int[] freq = new int[256];
+        int res = 0;
+        for (int i = 0, j = 0; i < s.length(); i++) {
+            freq[s.charAt(i)]++;
+            while (freq[s.charAt(i)] > 1) {
+                freq[s.charAt(j++)]--;
+            }
+            res = Math.max(res, i - j + 1);
+        }
+
+        return res;
+    }
 }

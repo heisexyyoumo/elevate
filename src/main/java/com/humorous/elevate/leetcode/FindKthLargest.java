@@ -3,7 +3,7 @@ package com.humorous.elevate.leetcode;
 
 /**
  * 215. 数组中的第K个最大元素
- * 堆排序
+ * 堆排序 或 快排+二分
  */
 public class FindKthLargest {
 

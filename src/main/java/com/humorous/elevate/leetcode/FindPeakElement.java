@@ -5,39 +5,37 @@ package com.humorous.elevate.leetcode;
  */
 public class FindPeakElement {
 
-    public static void main(String[] args) {
-        int[] nums = {1,2,1,3,5,6,4};
-        System.out.println(new FindPeakElement().findPeakElement(nums));
-    }
-
     public int findPeakElement(int[] nums) {
-
-        int res = -1;
-        for (int i = 0; i < nums.length; i++) {
-            if (i + 1 == nums.length) {
-                res = i;
-                break;
+        int n = nums.length;
+        int l = 0;
+        int r = n - 1;
+        while (l < r) {
+            int m = l + (r - l) / 2;
+            if (m + 1 <= r && nums[m] > nums[m + 1]) {
+                r = m;
             } else {
-                if (nums[i] <= nums[i + 1]) {
-                    continue;
-                } else {
-                    res = i;
-                    break;
-                }
+                l = m + 1;
             }
         }
 
-        return res;
+        return l;
     }
 
+    /**
+     * 优化：当 m + 1 <= r为false时，此时 m = r == >  l = m = r == > l = r，此时已不满足while循环
+     * 故不会出现 m + 1 <= r 为false的场景
+     */
     public int findPeakElement2(int[] nums) {
-        int l = 0, r = nums.length - 1;
+        int n = nums.length;
+        int l = 0;
+        int r = n - 1;
         while (l < r) {
-            int mid = (l + r) / 2;
-            if (nums[mid] > nums[mid + 1])
-                r = mid;
-            else
-                l = mid + 1;
+            int m = l + (r - l) / 2;
+            if (nums[m] > nums[m + 1]) {
+                r = m;
+            } else {
+                l = m + 1;
+            }
         }
         return l;
     }

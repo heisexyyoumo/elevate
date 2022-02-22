@@ -2,6 +2,7 @@ package com.humorous.elevate.leetcode;
 
 /**
  * 154. 寻找旋转排序数组中的最小值 II
+ * 剑指 Offer 11. 旋转数组的最小数字
  */
 public class FindMinII {
 
@@ -16,9 +17,6 @@ public class FindMinII {
         int r = n - 1;
         while (l < r) {
             int m = l + (r - l) / 2;
-            if (nums[l] <= nums[m] && nums[m] <= nums[r] && (r == m || m == l)) {
-                break;
-            }
             if (nums[m] > nums[r]) {
                 l = m + 1;
             } else if (nums[m] < nums[r]) {

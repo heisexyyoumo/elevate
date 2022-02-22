@@ -16,6 +16,7 @@ public class BinaryTreePaths {
     }
 
     public void dfs(TreeNode root, String s) {
+        // 终止条件
         if (root == null) {
             return;
         }
@@ -24,6 +25,8 @@ public class BinaryTreePaths {
             res.add(s);
             return;
         }
+
+        // 递归
         dfs(root.left, s + "->");
         dfs(root.right, s + "->");
     }

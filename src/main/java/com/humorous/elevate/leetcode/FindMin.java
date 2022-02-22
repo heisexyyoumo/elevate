@@ -10,9 +10,6 @@ public class FindMin {
         int r = n - 1;
         while (l < n) {
             int m = l + (r - l) / 2;
-            if (nums[l] <= nums[m] && nums[m] <= nums[r]) {
-                break;
-            }
             // [l,m]升序
             if (nums[m] > nums[r]) {
                 l = m + 1;

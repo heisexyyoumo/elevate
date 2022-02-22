@@ -43,4 +43,29 @@ public class LongestPalindrome {
         }
         return s.substring(l, r + 1);
     }
+
+    /**
+     * 暴力枚举
+     */
+    public String longestPalindrome2(String s) {
+        String res = "";
+        for (int i = 0; i < s.length(); i++) {
+
+            // i为回文串的中心点
+            for (int j = i, k = i; j >= 0 && k < s.length() && s.charAt(j) == s.charAt(k); j--, k++) {
+                if (res.length() < k - j + 1) {
+                    res = s.substring(j, k + 1);
+                }
+            }
+
+            // i,i+1为回文串的中心点Z 字形变换
+            for (int j = i, k = i + 1; j >= 0 && k < s.length() && s.charAt(j) == s.charAt(k); j--, k++) {
+                if (res.length() < k - j + 1) {
+                    res = s.substring(j, k + 1);
+                }
+            }
+        }
+
+        return res;
+    }
 }

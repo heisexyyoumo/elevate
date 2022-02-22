@@ -4,36 +4,35 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 
 /**
+ * 155. 最小栈
  * 面试题 03.02. 栈的最小值
- * 执行push、pop和min操作的时间复杂度必须为O(1)。
+ * 一个辅助栈
  */
-
 public class MinStack {
 
-    Deque<Integer> xStack;
-    Deque<Integer> minStack;
+    Deque<int[]> stack;
 
     public MinStack() {
-        xStack = new ArrayDeque<Integer>();
-        minStack = new ArrayDeque<Integer>();
-        minStack.push(Integer.MAX_VALUE);
+        stack = new ArrayDeque<>();
     }
 
-    public void push(int x) {
-        xStack.push(x);
-        minStack.push(Math.min(minStack.peek(), x));
+    public void push(int val) {
+        if (stack.isEmpty()) {
+            stack.push(new int[]{val, val});
+        } else {
+            stack.push(new int[]{val, Math.min(val, stack.peek()[1])});
+        }
     }
 
     public void pop() {
-        xStack.pop();
-        minStack.pop();
+        stack.pop();
     }
 
     public int top() {
-        return xStack.peek();
+        return stack.peek()[0];
     }
 
     public int getMin() {
-        return minStack.peek();
+        return stack.peek()[1];
     }
 }

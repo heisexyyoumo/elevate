@@ -1,5 +1,7 @@
 package com.humorous.elevate.basis;
 
+import java.util.Arrays;
+
 /**
  * 基础
  */
@@ -10,6 +12,7 @@ public class BaseTest {
     int size;
 
     public BaseTest() {
+
     }
 
     public BaseTest(int size) {
@@ -30,24 +33,27 @@ public class BaseTest {
     }
 
     public static void main(String[] args) {
-//        BaseTest t = new BaseTest();
-//        t.STATIC_MSG = "modify";
-//        BaseTest.StaticClass.print();
-//        String s = new StringBuilder().toString();
-//        System.out.println(s);
-//        BaseTest baseTest = new BaseTest(3);
-//        System.out.println(baseTest.size);
+//        String[] arr = {"a", "aa", "b", "bc", "dc"};
+//        Arrays.sort(arr, (o1, o2) -> {
+//            return o2.length() - o1.length();
+//        });
 //
-//        long a = -2147483648, b = 2147483647;
-//        long res = (long) Math.abs(a - b);
-//        System.out.println(res);
-//        System.out.println(Math.abs(a - b));
-//        String s = "hhahg";
-//        String str = s.substring(0,5);
-//        System.out.println(str);
-        int i =1;
-        System.out.println();
+//        for (String str : arr) {
+//            System.out.println(str);
+//        }
+        int a = 1;
+        int max = Math.max(a, a + 1);
+        System.out.println(max);
+    }
 
+    static class A {
+        public A() {
+
+        }
+
+        final int a() {
+            return 1;
+        }
     }
 
 }

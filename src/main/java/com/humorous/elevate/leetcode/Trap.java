@@ -18,20 +18,28 @@ public class Trap {
     // 单调栈解法
     // 单调递减栈维持接雨水的左边界，有比左边界的值大的时候表示可以接雨水
     public int trap(int[] height) {
+        int res = 0;
+        int n = height.length;
         Deque<Integer> stack = new ArrayDeque<>();
-        int index = 0;
-        int ans = 0;
-        while (index < height.length) {
-            while (!stack.isEmpty() && height[stack.peek()] < height[index]) {
+
+        // 单调递减栈
+        for (int i = 0; i < n; i++) {
+            while (!stack.isEmpty() && height[stack.peek()] < height[i]) {
                 int pop = stack.pop();
-                if (stack.isEmpty()) break;
-                int h = Math.min(height[index], height[stack.peek()]) - height[pop];
-                int w = index - stack.peek() - 1;
-                ans += h * w;
+                while (!stack.isEmpty() && height[stack.peek()] == height[pop]) {
+                    stack.pop();
+                }
+                if (!stack.isEmpty()) {
+                    int width = i - stack.peek() - 1;
+                    int high = Math.min(height[i], height[stack.peek()]) - height[pop];
+                    res += width * high;
+                }
+
             }
-            stack.push(index++);
+            stack.push(i);
         }
-        return ans;
+
+        return res;
     }
 
 

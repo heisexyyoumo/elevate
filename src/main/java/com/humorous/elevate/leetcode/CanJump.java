@@ -1,11 +1,7 @@
 package com.humorous.elevate.leetcode;
 
-import java.util.LinkedList;
-import java.util.Queue;
-
 /**
  * 55. 跳跃游戏
- * 动态规划+BFS
  */
 public class CanJump {
 
@@ -15,40 +11,21 @@ public class CanJump {
         System.out.println(new CanJump().canJump(nums));
     }
 
-    // 贪心算法
+    /**
+     * 如果某一个作为 起跳点 的格子可以跳跃的距离是 3，那么表示后面 3 个格子都可以作为 起跳点
+     * 可以对每一个能作为 起跳点 的格子都尝试跳一次，把 能跳到最远的距离 不断更新
+     * 如果可以一直跳到最后，就成功了
+     */
     public boolean canJump(int[] nums) {
-        int n = nums.length;
-        int maxJump = 0;
-        for (int i = 0; i < n; i++) {
-            if (i <= maxJump) {
-                maxJump = Math.max(maxJump, i + nums[i]);
-                if (maxJump >= n - 1) {
-                    return true;
-                }
+        int k = 0;
+        for (int i = 0; i < nums.length; i++) {
+            if (i > k) {
+                return false;
             }
+            k = Math.max(k, i + nums[i]);
         }
-        return false;
+        return true;
     }
 
-    public boolean canJump2(int[] nums) {
-        boolean[] memo = new boolean[nums.length];
 
-        // 队列中存放nums数组的下标
-        Queue<Integer> queue = new LinkedList();
-        memo[0] = true;
-        queue.add(0);
-
-        while (!queue.isEmpty()) {
-            int index = queue.poll();
-            for (int i = 1; i <= nums[index]; i++) {
-                int nextIndex = index + i;
-                if (!queue.contains(nextIndex) && nextIndex < nums.length) {
-                    queue.add(nextIndex);
-                    memo[nextIndex] = true;
-                }
-            }
-        }
-
-        return memo[nums.length - 1];
-    }
 }

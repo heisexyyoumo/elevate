@@ -5,6 +5,7 @@ import java.util.Queue;
 
 /**
  * 329. 矩阵中的最长递增路径
+ * 剑指 Offer II 112. 最长递增路径
  */
 public class LongestIncreasingPath {
     public static void main(String[] args) {
@@ -66,5 +67,47 @@ public class LongestIncreasingPath {
 
     public boolean isInArea(int x, int y, int m, int n) {
         return 0 <= x && 0 <= y && x < m && y < n;
+    }
+
+
+    /**
+     * 记忆化dfs
+     */
+    int[][] dirs = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
+
+    public int longestIncreasingPath2(int[][] matrix) {
+        int m = matrix.length;
+        int n = matrix[0].length;
+
+        int[][] memo = new int[m][n];
+        int res = 0;
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                res = Math.max(res, dfs(i, j, matrix, memo));
+            }
+        }
+
+        return res;
+
+    }
+
+    public int dfs(int x, int y, int[][] matrix, int[][] memo) {
+        if (memo[x][y] != 0) {
+            return memo[x][y];
+        }
+        memo[x][y] = 1;
+        for (int[] arr : dirs) {
+            int nx = x + arr[0];
+            int ny = y + arr[1];
+            if (isArea(nx, ny, matrix) && matrix[nx][ny] > matrix[x][y]) {
+                memo[x][y] = Math.max(memo[x][y], 1 + dfs(nx, ny, matrix, memo));
+            }
+        }
+
+        return memo[x][y];
+    }
+
+    public boolean isArea(int x, int y, int[][] matrix) {
+        return x >= 0 && y >= 0 && x < matrix.length && y < matrix[0].length;
     }
 }

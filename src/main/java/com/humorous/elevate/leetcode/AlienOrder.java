@@ -2,8 +2,11 @@ package com.humorous.elevate.leetcode;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Queue;
 
 /**
@@ -11,141 +14,158 @@ import java.util.Queue;
  */
 public class AlienOrder {
 
-    /**
-     * 邻接矩阵+拓扑排序
-     */
+    public static void main(String[] args) {
+        String[] words = {"wrt", "wrf", "er", "ett", "rftt", "te"};
+        System.out.println(new AlienOrder().alienOrder2(words));
+    }
+
     public String alienOrder(String[] words) {
-        // graph[i][j] == true，表示i在j的前面
-        boolean[][] graph = new boolean[26][26];
-        int[] inDegree = new int[26];
-        boolean[] exist = new boolean[26];
-        for (String s : words) {
-            for (char c : s.toCharArray()) {
-                exist[c - 'a'] = true;
-            }
-        }
-
-        // 建图
-        for (int i = 0; i < words.length - 1; i++) {
-            int j = i + 1;
-            char[] word1 = words[i].toCharArray();
-            char[] word2 = words[j].toCharArray();
-            int cur1 = 0;
-            int cur2 = 0;
-            while (cur1 < word1.length && cur2 < word2.length && word1[cur1] == word2[cur2]) {
-                cur1++;
-                cur2++;
-            }
-            if (cur1 < word1.length && cur2 == word2.length) {
-                return "";
-            }
-            if (cur1 < word1.length && cur2 < word2.length) {
-                char from = word1[cur1];
-                char to = word2[cur2];
-                inDegree[to - 'a'] += graph[from - 'a'][to - 'a'] ? 0 : 1;
-                graph[from - 'a'][to - 'a'] = true;
-            }
-        }
-
-        // 拓扑排序
-        int count = 0;
-        List<Character> res = new ArrayList<>();
-        Queue<Integer> queue = new LinkedList<>();
-        for (int i = 0; i < 26; i++) {
-            if (exist[i] && inDegree[i] == 0) {
-                queue.add(i);
-            }
-            if (exist[i]) {
-                count++;
-            }
-        }
-
-        while (!queue.isEmpty()) {
-            int poll = queue.poll();
-            res.add((char) (poll + 'a'));
-            for (int j = 0; j < 26; j++) {
-                if (graph[poll][j]) {
-                    graph[poll][j] = false;
-                    if (--inDegree[j] == 0) {
-                        queue.add(j);
-                    }
+        Map<Integer, Character> map1 = new HashMap<>();
+        Map<Character, Integer> map2 = new HashMap<>();
+        int id = 0;
+        for (String word : words) {
+            for (char ch : word.toCharArray()) {
+                if (!map2.containsKey(ch)) {
+                    map2.put(ch, id);
+                    map1.put(id, ch);
+                    id++;
                 }
             }
         }
 
-        if (res.size() != count) {
-            return "";
+        int n = map2.size();
+        // 初始化邻接表
+        List<List<Character>> edges = new ArrayList<>(n);
+        for (int i = 0; i < n; i++) {
+            edges.add(new ArrayList<>());
         }
+        int[] inDegrees = new int[n];
+        int m = words.length;
+
+        // 因为有向图的原因，只需要两两比较即可
+        for (int i = 0; i < m; i++) {
+            int j = i + 1;
+            if (j == m) {
+                break;
+            }
+            int idx = 0;
+            String first = words[i];
+            String second = words[j];
+            int len = Math.min(first.length(), second.length());
+            while (idx < len) {
+                char fch = first.charAt(idx);
+                char sch = second.charAt(idx);
+                if (fch != sch) {
+                    inDegrees[map2.get(sch)]++;
+                    edges.get(map2.get(fch)).add(sch);
+                    break;
+                }
+                idx++;
+            }
+            if (idx == len && idx < first.length()) {
+                return "";
+            }
+
+        }
+
+        Queue<Character> queue = new LinkedList<>();
+        for (int i = 0; i < n; i++) {
+            if (inDegrees[i] == 0) {
+                queue.add(map1.get(i));
+            }
+        }
+
         StringBuilder sb = new StringBuilder();
-        for (char c : res) sb.append(c);
-        return sb.toString();
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            while (size-- > 0) {
+                char ch = queue.poll();
+                sb.append(ch);
+                for (char next : edges.get(map2.get(ch))) {
+                    inDegrees[map2.get(next)]--;
+                    if (inDegrees[map2.get(next)] == 0) {
+                        queue.add(next);
+                    }
+                }
+
+            }
+        }
+
+        return sb.length() == n ? sb.toString() : "";
     }
 
 
+    /**
+     * 优化版
+     */
     public String alienOrder2(String[] words) {
-        // graph[i][j] == true，表示i在j的前面
-        boolean[][] graph = new boolean[26][26];
-        int[] inDegree = new int[26];
-        boolean[] exist = new boolean[26];
-        for (String s : words) {
-            for (char c : s.toCharArray()) {
-                exist[c - 'a'] = true;
-            }
-        }
 
-        // 建图
-        for (int i = 0; i < words.length - 1; i++) {
-            int j = i + 1;
-            char[] word1 = words[i].toCharArray();
-            char[] word2 = words[j].toCharArray();
-            int cur1 = 0;
-            int cur2 = 0;
-            while (cur1 < word1.length && cur2 < word2.length && word1[cur1] == word2[cur2]) {
-                cur1++;
-                cur2++;
-            }
-            if (cur1 < word1.length && cur2 == word2.length) {
-                return "";
-            }
-            if (cur1 < word1.length && cur2 < word2.length) {
-                char from = word1[cur1];
-                char to = word2[cur2];
-                inDegree[to - 'a'] += graph[from - 'a'][to - 'a'] ? 0 : 1;
-                graph[from - 'a'][to - 'a'] = true;
-            }
-        }
-
-        // 拓扑排序
-        int count = 0;
-        List<Character> res = new ArrayList<>();
-        Queue<Integer> queue = new LinkedList<>();
-        for (int i = 0; i < 26; i++) {
-            if (exist[i] && inDegree[i] == 0) {
-                queue.add(i);
-            }
-            if (exist[i]) {
-                count++;
-            }
-        }
-
-        while (!queue.isEmpty()) {
-            int poll = queue.poll();
-            res.add((char) (poll + 'a'));
-            for (int j = 0; j < 26; j++) {
-                if (graph[poll][j]) {
-                    graph[poll][j] = false;
-                    if (--inDegree[j] == 0) {
-                        queue.add(j);
-                    }
+        // 初始化邻接表
+        Map<Character, HashSet<Character>> map = new HashMap<>();
+        for (String word : words) {
+            for (char ch : word.toCharArray()) {
+                if (!map.containsKey(ch)) {
+                    map.put(ch, new HashSet<>());
                 }
             }
         }
 
-        if (res.size() != count) {
-            return "";
+        int n = map.size();
+
+        int[] inDegrees = new int[26];
+        int m = words.length;
+
+        // 因为有向图的原因，只需要两两比较即可
+        for (int i = 0; i < m; i++) {
+            int j = i + 1;
+            if (j == m) {
+                break;
+            }
+            int idx = 0;
+            String first = words[i];
+            String second = words[j];
+            int len = Math.min(first.length(), second.length());
+            while (idx < len) {
+                char fch = first.charAt(idx);
+                char sch = second.charAt(idx);
+                if (fch != sch) {
+                    if (!map.get(fch).contains(sch)) {
+                        inDegrees[sch - 'a']++;
+                        map.get(fch).add(sch);
+                    }
+                    break;
+
+                }
+                idx++;
+            }
+            if (idx == len && idx < first.length()) {
+                return "";
+            }
+
         }
+
+        Queue<Character> queue = new LinkedList<>();
+        for (Character key : map.keySet()) {
+            if (inDegrees[key - 'a'] == 0) {
+                queue.add(key);
+            }
+        }
+
         StringBuilder sb = new StringBuilder();
-        for (char c : res) sb.append(c);
-        return sb.toString();
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            while (size-- > 0) {
+                char ch = queue.poll();
+                sb.append(ch);
+                for (char next : map.get(ch)) {
+                    inDegrees[next - 'a']--;
+                    if (inDegrees[next - 'a'] == 0) {
+                        queue.add(next);
+                    }
+                }
+
+            }
+        }
+        return sb.length() == n ? sb.toString() : "";
     }
 }

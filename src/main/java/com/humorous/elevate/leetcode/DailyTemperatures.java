@@ -45,25 +45,4 @@ public class DailyTemperatures {
         return ans;
     }
 
-    /**
-     * 单调栈-自己实现版本
-     */
-    public int[] dailyTemperatures3(int[] temperatures) {
-        // 单调递减栈,存放下标
-        Deque<Integer> stack = new ArrayDeque<>();
-        int[] ans = new int[temperatures.length];
-        for (int i = 0; i < temperatures.length; i++) {
-            if (stack.isEmpty()) {
-                stack.push(i);
-            } else {
-                while (!stack.isEmpty() && temperatures[stack.peek()] < temperatures[i]) {
-                    int pop = stack.pop();
-                    ans[pop] = i - pop;
-                }
-                stack.push(i);
-            }
-        }
-
-        return ans;
-    }
 }
